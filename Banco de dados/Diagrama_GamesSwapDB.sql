@@ -13,14 +13,20 @@ CREATE TABLE usuarios (
 
 CREATE TABLE itens (
   id INT PRIMARY KEY IDENTITY,
+  categoria_id INT,
   nome VARCHAR(100) NOT NULL,
   descricao TEXT,
   preco DECIMAL(10,2) NOT NULL,
-  categoria VARCHAR(100),
   imagem VARCHAR(255),
   quantidade_estoque INT,
   vendedor_id INT,
   FOREIGN KEY (vendedor_id) REFERENCES usuarios(id)
+  FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+CREATE TABLE categorias (
+  id INT PRIMARY KEY IDENTITY,
+  nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE pedidos (
@@ -42,9 +48,15 @@ CREATE TABLE itens_pedidos (
 
 CREATE TABLE jogos (
   id INT PRIMARY KEY IDENTITY,
+  genero_id INT,
   titulo VARCHAR(100) NOT NULL,
   plataforma VARCHAR(100),
-  genero VARCHAR(100)
+  FOREIGN KEY (genero_id) REFERENCES genero(id)
+);
+
+CREATE TABLE genero (
+  id INT PRIMARY KEY IDENTITY,
+  nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE consoles (
@@ -52,13 +64,4 @@ CREATE TABLE consoles (
   modelo VARCHAR(100) NOT NULL,
   fabricante VARCHAR(100),
   geracao INT
-);
-
-CREATE TABLE carrinhos (
-  id INT PRIMARY KEY Identity,
-  usuario_id INT,
-  item_id INT,
-  quantidade INT,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-  FOREIGN KEY (item_id) REFERENCES itens(id)
 );
